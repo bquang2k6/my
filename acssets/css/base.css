@@ -144,7 +144,7 @@
 }
 
 .outstanding::before{
-    content: "My Projects";
+    content: " Projects";
     width: 100%;
     text-align: center;
     font-size: 21px;
