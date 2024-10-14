@@ -100,4 +100,81 @@
     </div>
     <script src="./acssets/js/app.js"></script>
 </body>
+
+
+
+
+<div id="snowflakeContainer"></div>
+<style>
+
+
+
+	#snowflakeContainer {
+		position: fixed;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 100%;
+		pointer-events: none;
+		z-index: 9999; /* Đảm bảo tuyết nằm trên các phần tử khác */
+	}
+	.snowflake {
+		position: fixed;
+		top: -50px;
+		color: #ffffff; /* Màu tuyết */
+		user-select: none;
+		pointer-events: none;
+		z-index: 1000;
+	}
+</style>
+<body>
+    <div id="snowflakeContainer"></div>
+
+    <script>
+        const numberOfSnowflakes = 100; // Số lượng bông tuyết
+        const snowflakeContainer = document.getElementById("snowflakeContainer");
+
+        function createSnowflake() {
+            const snowflake = document.createElement("span");
+            snowflake.classList.add("snowflake");
+            snowflake.innerHTML = "❄"; // Ký tự bông tuyết
+            snowflake.style.left = Math.random() * window.innerWidth + "px"; // Vị trí ngang ngẫu nhiên
+            snowflake.style.opacity = Math.random(); // Độ trong suốt ngẫu nhiên
+            snowflake.style.fontSize = Math.random() * 10 + 10 + "px"; // Kích thước ngẫu nhiên
+            snowflakeContainer.appendChild(snowflake);
+
+            let xSpeed = Math.random() * 1 - 0.5; // Tốc độ ngang (mô phỏng gió)
+            let ySpeed = Math.random() * 2 + 1;   // Tốc độ rơi
+
+            // Cập nhật vị trí của bông tuyết
+            function moveSnowflake() {
+                const currentTop = parseFloat(snowflake.style.top) || -50;
+                const currentLeft = parseFloat(snowflake.style.left) || 0;
+
+                // Cập nhật vị trí với tốc độ
+                snowflake.style.top = (currentTop + ySpeed) + "px";
+                snowflake.style.left = (currentLeft + xSpeed) + "px";
+
+                // Nếu bông tuyết đi khỏi màn hình thì đưa nó về vị trí ban đầu
+                if (currentTop > window.innerHeight || currentLeft < -50 || currentLeft > window.innerWidth) {
+                    snowflake.style.top = "-50px";
+                    snowflake.style.left = Math.random() * window.innerWidth + "px";
+                }
+
+                requestAnimationFrame(moveSnowflake);
+            }
+
+            moveSnowflake();
+        }
+
+        function startSnow() {
+            for (let i = 0; i < numberOfSnowflakes; i++) {
+                createSnowflake();
+            }
+        }
+
+        // Khi trang web đã sẵn sàng, bắt đầu hiệu ứng tuyết rơi
+        document.addEventListener("DOMContentLoaded", startSnow);
+    </script>
+</body>
 </html>
